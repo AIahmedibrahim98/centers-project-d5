@@ -41,4 +41,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function created_by_user()
+    {
+        return $this->belongsTo(User::class,'created_by','id'); // Required Add FK
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class,'instractor_id','id');
+    }
 }
