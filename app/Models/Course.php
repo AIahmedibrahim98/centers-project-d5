@@ -20,4 +20,8 @@ class Course extends Model
     {
         return $this->hasMany(Schedule::class,'course_id','id');
     }
+    public function instractors()
+    {
+        return $this->belongsToMany(User::class,'schedules','course_id','instractor_id');
+    }
 }
