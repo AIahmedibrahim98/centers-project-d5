@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'Companies')
+@section('title', 'Branches')
 @section('content')
     <div class="rounded bg-white p-3 m-3">
-        <h1 class="text-center">Companies</h1>
+        <h1 class="text-center">Branches of {{ $branches->first()->company->name }}</h1>
         <div class="d-flex justify-content-end mb-3">
-            <div><a name="" id="" class="btn btn-primary" target="_blank" href="{{ route('companies.create') }}"
-                    role="button">Add New Company</a></div>
+            <div><a name="" id="" class="btn btn-primary" target="_blank" href="{{ route('companies.branches.create',$branches->first()->company->id) }}"
+                    role="button">Add New Branch</a></div>
         </div>
         @if (session()->has('message'))
             <div class="alert alert-success" role="alert">
@@ -18,29 +18,23 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">name</th>
-                        <th scope="col">owner</th>
-                        <th scope="col">tax numebr</th>
+                        <th scope="col">location</th>
                         <th scope="col">created at</th>
                         <th scope="col">updated at</th>
                         <th scope="col">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($companies as $key => $company)
+                    @forelse ($branches as $key => $branch)
                         <tr class="">
-                            <td scope="row">{{ $key + $companies->firstItem() }}</td>
-                            <td>{{ $company->name }}</td>
-                            <td>{{ $company->owner }}</td>
-                            <td>{{ $company->tax_numebr }}</td>
-                            <td>{{ $company->created_at }}</td>
-                            <td>{{ $company->updated_at }}</td>
+                            <td scope="row">{{ $key + $branches->firstItem() }}</td>
+                            <td>{{ $branch->name }}</td>
+                            <td>{{ $branch->location }}</td>
+                            <td>{{ $branch->created_at }}</td>
+                            <td>{{ $branch->updated_at }}</td>
                             <td>
                                 <div class="d-flex justify-content-evenly">
-                                    <a name="" id="" class="btn btn-warning"
-                                        href="{{ route('companies.branches.index', $company->id) }}" role="button">
-                                        <i class="fa-solid fa-code-branch fa-shake"></i>
-                                    </a>
-                                    <form action='{{ route('companies.delete', $company->id) }}' method="post">
+                                    <form action='{{ route('companies.delete', $branch->id) }}' method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">
@@ -48,10 +42,9 @@
                                         </button>
                                     </form>
                                     <a name="" id="" class="btn btn-primary"
-                                        href="{{ route('companies.edit', $company->id) }}" role="button">
+                                        href="{{ route('companies.edit', $branch->id) }}" role="button">
                                         <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
-
                                 </div>
                             </td>
                         </tr>
@@ -62,8 +55,8 @@
                     @endforelse
                 </tbody>
             </table>
-            {{-- {{ $companies->links('vendor.pagination.simple-bootstrap-5') }} --}}
-            {{ $companies->links() }}
+            {{-- {{ $branches->links('vendor.pagination.simple-bootstrap-5') }} --}}
+            {{ $branches->links() }}
         </div>
 
     </div>
