@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\VendorController;
 use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Maneger;
@@ -37,9 +38,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [CompanyController::class, 'edit'])->name('edit');
         Route::patch('/update/{id}', [CompanyController::class, 'update'])->name('update');
         Route::prefix('branches')->as('branches.')->group(function () {
-            Route::get('/{company_id}',[BranchController::class,'index'])->name('index');
-            Route::get('/{company_id}/create',[BranchController::class,'create'])->name('create');
-            Route::post('/store/{company_id}/',[BranchController::class,'store'])->name('store');
+            Route::get('/{company_id}', [BranchController::class, 'index'])->name('index');
+            Route::get('/{company_id}/create', [BranchController::class, 'create'])->name('create');
+            Route::post('/store/{company_id}/', [BranchController::class, 'store'])->name('store');
         });
     });
+    // Route::resource('vendors',VendorController::class)->except(['create']);
+    // Route::resource('vendors', VendorController::class)->only(['index']);
+    Route::resource('vendors', VendorController::class);
 });
