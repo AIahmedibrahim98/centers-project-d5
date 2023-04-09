@@ -69,7 +69,8 @@ class VendorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $vendor = Vendor::find($id);
+        return view('vendors.edit',compact('vendor'));
     }
 
     /**
@@ -81,7 +82,16 @@ class VendorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=>'required|string|max:200',
+            'logo'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        $vendor = Vendor::find($id);
+        $vendor->name = $request->name;
+        if($request->logo && $vendor->logo) Storage::disk('public')->delete($vendor->logo);
+        if($request->logo) $vendor->logo = $request->file('logo')->store('vendors');
+        $vendor->save();
+       return redirect()->route('vendors.index')->with(['message'=>'Vendor Updated']);
     }
 
     /**

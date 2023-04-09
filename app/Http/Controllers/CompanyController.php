@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 
 class CompanyController extends Controller
 {
+   /*  function __construct()
+    {
+        $this->middleware('age');
+    } */
     public function index()
     {
         $companies = Company::orderBy('created_at', 'desc')->paginate(10);

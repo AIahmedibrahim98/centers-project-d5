@@ -13,6 +13,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <script src="{{ asset('js/main.js') }}"></script>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -35,10 +37,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('companies.index') }}">Campanies</a>
+                            <a class="nav-link" href="{{ route('companies.index') }}">{{ trans('messages.Campanies') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('vendors.index') }}">Vendors</a>
+                            <a class="nav-link" href="{{ route('vendors.index') }}">{{ __('messages.Vendors') }}</a>
                         </li>
                     </ul>
 
@@ -69,6 +71,9 @@
                                         onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('greeting',__('messages.lang_code')) }}">
+                                        {{ __('messages.lang') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

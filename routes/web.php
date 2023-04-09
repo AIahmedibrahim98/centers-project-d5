@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Employee;
 use App\Models\Maneger;
 use Illuminate\Routing\Route as RoutingRoute;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,15 +24,23 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/greeting/{locale}', function ($locale) {
+    if (!in_array($locale, ['en', 'ar'])) {
+        abort(400);
+    }
+    session()->put("locale", $locale);
+    App::setLocale($locale);
+    return redirect()->back();
+})->name('greeting');
 
 Auth::routes();
-
 Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+    // Route::middleware('age')->prefix('companies')->as('companies.')->group(function () {
     Route::prefix('companies')->as('companies.')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('index');
+        // Route::get('/create', [CompanyController::class, 'create'])->name('create')->middleware('age');
         Route::get('/create', [CompanyController::class, 'create'])->name('create');
         Route::post('/store', [CompanyController::class, 'store'])->name('store');
         Route::delete('delete/{id}', [CompanyController::class, 'delete'])->name('delete');

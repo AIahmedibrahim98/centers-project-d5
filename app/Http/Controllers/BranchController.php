@@ -10,6 +10,7 @@ class BranchController extends Controller
 {
     public function index($id)
     {
+        
         $branches = Company::find($id)->branches()->paginate(25);
         return view('companies.branches.index')->with(compact('branches'));
     }
