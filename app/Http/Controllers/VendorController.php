@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LoginHi;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class VendorController extends Controller
@@ -15,6 +17,7 @@ class VendorController extends Controller
      */
     public function index()
     {
+        Mail::send(new LoginHi(['name'=>auth()->user()->name,'email'=>auth()->user()->email]));
         $vendors = Vendor::orderBy('id','desc')->paginate(25);
         return view('vendors.index',compact('vendors'));
     }

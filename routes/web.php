@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VendorController;
 use App\Models\Company;
 use App\Models\Employee;
@@ -24,18 +25,20 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/greeting/{locale}', function ($locale) {
-    if (!in_array($locale, ['en', 'ar'])) {
-        abort(400);
-    }
-    session()->put("locale", $locale);
-    App::setLocale($locale);
-    return redirect()->back();
-})->name('greeting');
+
 
 Auth::routes();
-Route::middleware('auth')->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/greeting/{locale}', function ($locale) {
+        if (!in_array($locale, ['en', 'ar'])) {
+            abort(400);
+        }
+        session()->put("locale", $locale);
+        // App::setLocale($locale);
+        return redirect()->back();
+    })->name('greeting');
+
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Route::middleware('age')->prefix('companies')->as('companies.')->group(function () {
     Route::prefix('companies')->as('companies.')->group(function () {

@@ -17,13 +17,13 @@ class CheckAge
      */
     public function handle(Request $request, Closure $next)
     {
-        Log::info("message from handle");
+        // Log::info("message from handle");
         // if ($request->age < 18) abort(401);
         return $next($request);
     }
 
     public function terminate($request, $response)
     {
-        Log::info("message from terminate");
+        // Log::info("message from terminate");
     }
 }

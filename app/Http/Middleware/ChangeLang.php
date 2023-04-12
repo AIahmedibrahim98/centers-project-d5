@@ -18,6 +18,7 @@ class ChangeLang
      */
     public function handle(Request $request, Closure $next)
     {
+        set_time_limit(5000);
         Log::info(session('locale'));
         if (session()->has('locale')) {
             App::setLocale(session('locale'));
