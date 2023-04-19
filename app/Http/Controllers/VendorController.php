@@ -17,9 +17,9 @@ class VendorController extends Controller
      */
     public function index()
     {
-        Mail::send(new LoginHi(['name'=>auth()->user()->name,'email'=>auth()->user()->email]));
-        $vendors = Vendor::orderBy('id','desc')->paginate(25);
-        return view('vendors.index',compact('vendors'));
+        //Mail::send(new LoginHi(['name'=>auth()->user()->name,'email'=>auth()->user()->email]));
+        $vendors = Vendor::orderBy('id', 'desc')->paginate(25);
+        return view('vendors.index', compact('vendors'));
     }
 
     /**
@@ -41,16 +41,17 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required|string|max:200',
-            'logo'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required|string|max:200',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $vendor = new Vendor();
         $vendor->name = $request->name;
         // $vendor->logo = $request->logo;
         // Storage::disk('public')->put('vendors', $request->logo);
+        // Storage::download($request->logo);
         $vendor->logo = $request->file('logo')->store('vendors');
         $vendor->save();
-       return redirect()->route('vendors.index')->with(['message'=>'Vendor Added']);
+        return redirect()->route('vendors.index')->with(['message' => 'Vendor Added']);
     }
 
     /**
@@ -73,7 +74,7 @@ class VendorController extends Controller
     public function edit($id)
     {
         $vendor = Vendor::find($id);
-        return view('vendors.edit',compact('vendor'));
+        return view('vendors.edit', compact('vendor'));
     }
 
     /**
@@ -86,15 +87,15 @@ class VendorController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required|string|max:200',
-            'logo'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required|string|max:200',
+            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $vendor = Vendor::find($id);
         $vendor->name = $request->name;
-        if($request->logo && $vendor->logo) Storage::disk('public')->delete($vendor->logo);
-        if($request->logo) $vendor->logo = $request->file('logo')->store('vendors');
+        if ($request->logo && $vendor->logo) Storage::disk('public')->delete($vendor->logo);
+        if ($request->logo) $vendor->logo = $request->file('logo')->store('vendors');
         $vendor->save();
-       return redirect()->route('vendors.index')->with(['message'=>'Vendor Updated']);
+        return redirect()->route('vendors.index')->with(['message' => 'Vendor Updated']);
     }
 
     /**

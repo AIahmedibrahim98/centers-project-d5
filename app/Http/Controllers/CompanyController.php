@@ -14,10 +14,15 @@ class CompanyController extends Controller
     {
         $this->middleware('age');
     } */
-    public function index()
+    public function index(Request $request)
     {
-        $companies = Company::orderBy('created_at', 'desc')->paginate(10);
-        return view('companies.index')->with(compact('companies'));
+        // $companies = Company::orderBy('created_at', 'desc');
+        $companies = Company::query();
+        if($request->name) $companies->where('name',$request->name);
+
+        return view('companies.index')->with(['companies'=>
+        $companies->orderBy('created_at', 'desc')
+        ->paginate(10),'count'=>$companies->count()]);
     }
     public function create()
     {

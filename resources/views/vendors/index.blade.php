@@ -29,7 +29,10 @@
                         <tr class="">
                             <td scope="row">{{ $key + $vendors->firstItem() }}</td>
                             <td>{{ $vendor->name }}</td>
-                            <td><img width="50px" src="{{ asset('storage/' . $vendor->logo) }}"
+                            <td>
+                                <a download href="{{ asset('storage/' . $vendor->logo) }}">Download</a>
+                                {{-- @dump( asset('storage/' . $vendor->logo) ) --}}
+                                <img width="50px" src="{{ asset('storage/' . $vendor->logo) }}"
                                     class="img-fluid rounded-top" alt=""></td>
                             {{-- <td><img width="50px" src="{{ 'storage/'.$vendor->logo }}" class="img-fluid rounded-top" alt=""></td> --}}
                             <td>{{ $vendor->created_at->diffForHumans() }}</td>

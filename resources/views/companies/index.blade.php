@@ -2,7 +2,7 @@
 @section('title', 'Companies')
 @section('content')
     <div class="rounded bg-white p-3 m-3">
-        <h1 class="text-center">Companies</h1>
+        <h1 class="text-center">Companies({{ $count }})</h1>
         <div class="d-flex justify-content-end mb-3">
             <div><a name="" id="" class="btn btn-primary" target="_blank" href="{{ route('companies.create') }}"
                     role="button">Add New Company</a></div>
