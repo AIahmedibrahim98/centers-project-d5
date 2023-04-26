@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\ChangeLang;
 use App\Http\Middleware\CheckAge;
+use App\Http\Middleware\CheckProductKey;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -46,6 +47,7 @@ class Kernel extends HttpKernel
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            CheckProductKey::class
         ],
     ];
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryCollection;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -24,6 +25,14 @@ class CategoryController extends Controller
         // return CategoryResource::collection(Category::all());
         // return Category::all();
         return new CategoryCollection(Category::all());
+    }
+    public function myCategories(Request $request)
+    {
+        if ($request->hasHeader('X-USER-TOKEN') && $user = User::firstWhere('api_token', $request->header('X-USER-TOKEN'))) {
+            return new CategoryCollection($user->categories);
+        } else {
+            return response()->json(['message' => 'Not Auth'], 401);
+        }
     }
 
     /**
