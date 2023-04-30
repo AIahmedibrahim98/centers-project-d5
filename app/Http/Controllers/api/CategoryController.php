@@ -35,6 +35,11 @@ class CategoryController extends Controller
         }
     }
 
+    public function ownCategories()
+    {
+        return new CategoryCollection(auth()->user()->categories);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -18,8 +18,14 @@ class CompanyController extends Controller
     {
         // $companies = Company::orderBy('created_at', 'desc');
         $companies = Company::query();
-        if($request->name) $companies->where('name',$request->name);
-
+        if ($request->search) {
+            // $companies->where('name','like','%'.$request->search.'%');
+            $companies->where(function($query) use($request){
+                $query->where('name','like','%'.$request->search.'%')
+                ->orWhere('owner','like','%'.$request->search.'%');
+            });
+            // dd($companies->toSql()); // return native sql
+        }
         return view('companies.index')->with(['companies'=>
         $companies->orderBy('created_at', 'desc')
         ->paginate(10),'count'=>$companies->count()]);

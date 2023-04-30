@@ -3,9 +3,19 @@
 @section('content')
     <div class="rounded bg-white p-3 m-3">
         <h1 class="text-center">Companies({{ $count }})</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <form method="GET" action="{{ route('companies.index') }}">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="search" id="search" aria-describedby="helpId"
+                            placeholder="Search By Name">
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="d-flex justify-content-end mb-3">
-            <div><a name="" id="" class="btn btn-primary" target="_blank" href="{{ route('companies.create') }}"
-                    role="button">Add New Company</a></div>
+            <div><a name="" id="" class="btn btn-primary" target="_blank"
+                    href="{{ route('companies.create') }}" role="button">Add New Company</a></div>
         </div>
         @if (session()->has('message'))
             <div class="alert alert-success" role="alert">
@@ -32,7 +42,8 @@
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->owner }}</td>
                             <td>{{ $company->tax_numebr }}</td>
-                            <td> <span title="{{ $company->created_at }}">{{ $company->created_at->diffForHumans() }}</span> </td>
+                            <td> <span title="{{ $company->created_at }}">{{ $company->created_at->diffForHumans() }}</span>
+                            </td>
                             <td>{{ $company->updated_at->diffForHumans() }}</td>
                             <td>
                                 <div class="d-flex justify-content-evenly">

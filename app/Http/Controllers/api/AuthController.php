@@ -20,9 +20,11 @@ class AuthController extends Controller
             ]);
             if ($user = User::firstWhere('email', $request->email)) {
                 if (Hash::check($request->password, $user->password)) {
-                    $user->update(['api_token'=>Str::random(64)]);
+                    // $user->update(['api_token'=>Str::random(64)]);\
                     auth()->login($user);
-                    return response()->json(['message' => 'User login','user'=>$user]);
+                    return response()->json(['message' => 'User login',
+                    'token'=>$user->createToken("user_token")->plainTextToken,
+                    'user'=>$user]);
                 } else {
                     return response()->json(['message' => 'User Not Found'], 403);
                 }

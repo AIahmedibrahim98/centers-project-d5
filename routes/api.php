@@ -20,6 +20,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->group(function(){
+    Route::get('categories/own', [CategoryController::class, 'ownCategories']);
+});
+
+
 Route::get('categories/my', [CategoryController::class, 'myCategories']);
 
 Route::apiResource('categories', CategoryController::class);

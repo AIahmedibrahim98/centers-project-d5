@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BranchController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\VendorController;
 use App\Models\Company;
@@ -39,7 +40,6 @@ Route::middleware(['auth'])->group(function () {
     })->name('greeting');
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-
     // Route::middleware('age')->prefix('companies')->as('companies.')->group(function () {
     Route::prefix('companies')->as('companies.')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('index');
@@ -58,4 +58,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::resource('vendors',VendorController::class)->except(['create']);
     // Route::resource('vendors', VendorController::class)->only(['index']);
     Route::resource('vendors', VendorController::class);
+    Route::resource('courses', CourseController::class)->only(['create','store']);
+
+    Route::post('sub_categories',[CourseController::class,'sub_categories'])->name('sub_categories');
+
 });
